@@ -1,2 +1,2 @@
-# CommentRemover
+# CommentRemover（开发中）
 源代码注释删除工具，一键删除各种源代码内的各种注释，（⚠谨慎使用）
