@@ -132,7 +132,7 @@ void deleteAllFile() {
             }
         }
     }
-    printf("完成!\n");
+    printf("结束!\n");
     closedir(dir);
 }
 
@@ -143,26 +143,26 @@ void delete(char *fileAddress) {
     }
     // 判断文件名后缀
     const char *extension = strrchr(fileAddress, '.');
-    if (*extension == NULL) {
+    if (extension == NULL) {
         printf("\"%s\" 未知文件", fileAddress);
         return;
-    } else if ( *extension == ".c" ||
-                *extension == ".cpp" ||
-                *extension == ".java" ||
-                *extension == ".js" ||
-                *extension == ".swift" ||
-                *extension == ".rs" ||
-                *extension == ".go" ) {
+    } else if (strcmp(extension, ".c") == 0 ||
+            strcmp(extension, ".cpp") == 0 ||
+            strcmp(extension, ".java") == 0 ||
+            strcmp(extension, ".js") == 0 ||
+            strcmp(extension, ".swift") == 0 ||
+            strcmp(extension, ".rs") == 0 ||
+            strcmp(extension, ".go") == 0) {
         delete_c(fileAddress);
-    } else if (*extension == ".py") {
+    } else if (strcmp(extension, ".py") == 0) {
         delete_py(fileAddress);
-    } else if (*extension == ".php") {
+    } else if (strcmp(extension, ".php") == 0) {
         delete_php(fileAddress);
-    } else if (*extension == ".rb") {
+    } else if (strcmp(extension, ".rb") == 0) {
         delete_rb(fileAddress);
-    } else if (*extension == ".html") {
+    } else if (strcmp(extension, ".html") == 0) {
         delete_html(fileAddress);
-    } else if (*extension == ".css") {
+    } else if (strcmp(extension, ".css") == 0) {
         delete_css(fileAddress);
     } else {
         printf("\"%s\" 非法文件", fileAddress);
@@ -171,13 +171,11 @@ void delete(char *fileAddress) {
 }
 
 void delete_c(char *fileAddress){
-    // 获取文件名后缀
-    const char *_extension = strrchr(fileAddress, '.');
-
     // 打开文件
     FILE *originalFile, *tempFile;
-    char originalFileName[] = fileAddress;
-    char tempFileName[] = "temp" + *_extension;
+    char originalFileName[] = "";
+    strcpy(originalFileName, fileAddress);
+    char tempFileName[] = "temp.txt";
     
     // 以只读方式打开原文件，以写入方式打开临时文件
     originalFile = fopen(originalFileName, "r");
@@ -185,8 +183,8 @@ void delete_c(char *fileAddress){
     
     // 检查文件是否打开成功
     if  (originalFile == NULL || tempFile == NULL) {
-        printf("cannot open\n");
-        return 1;
+        printf("打开失败\n");
+        return ;
     }
     
     char line[256] = ""; // 用于存储读取的行
@@ -252,13 +250,11 @@ void delete_c(char *fileAddress){
     fclose(originalFile);
     fclose(tempFile);
 
-    printf("\n执行完成\n");
-    
     // 删除原文件，将临时文件重命名为原文件
     remove(originalFileName);
     rename(tempFileName, originalFileName);
-    
-    return 0;
+
+    printf("执行完成\n\n");
 }
 
 void delete_py(char *fileAddress){
