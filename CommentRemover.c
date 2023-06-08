@@ -35,13 +35,14 @@ int main() {
 
         if (strcmp(input, "delete") == 0) { // 判断是否为delete
             printf("按 'y' 继续...\n\n");
-            char *confirm;
-
             if(_getch() == 'y' || _getch() == 'Y') {
                 deleteAllFile();
             }
         } else if (input[1] == ':' && input[2] == '\\') { // 判断是否为文件路径
-            delete(input);
+            printf("按 'y' 继续...\n\n");
+            if(_getch() == 'y' || _getch() == 'Y') {
+                delete(input);
+            }
         } else { // 错误输入
             printf("请输入正确的路径\n");
         }
