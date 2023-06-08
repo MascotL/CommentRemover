@@ -8,9 +8,9 @@
 ( ✅支持 🚧开发中 )  
 ||文件类型|单行注释|多行注释|
 |-|---|---|---|
-|✅|`.c` `.cpp` `.java` `.js` `.swift` `.rs` `.go`|`// Comment`|`/* Comment */`|
-|🚧|`.py`       |`# Comment`        |`''' Comment '''` ```""" Comment """```|
-|🚧|`.php`      |`# Comment` `// Comment` |`/* Comment */`|
+|✅|`.c` `.cpp` `.java` `.js`<br>`.swift` `.rs` `.go`|`// Comment`|`/* Comment */`|
+|🚧|`.py`       |`# Comment`        |`''' Comment '''`<br>`""" Comment """`|
+|🚧|`.php`      |`# Comment`<br>`// Comment` |`/* Comment */`|
 |🚧|`.rb`       |`# Comment`        |`=begin Comment =end`|
 |🚧|`.html`     |`<!-- Comment -->` |`<!-- Comment -->`|
 |🚧|`.css`      |`/* Comment */`    |`/* Comment */`|
