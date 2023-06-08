@@ -170,32 +170,37 @@ void delete(char *fileAddress) {
     }
 }
 
-void delete_c(char *fileAddress){
+void delete_c(char *fileAddress) {
     // 打开文件
     FILE *originalFile, *tempFile;
-    char originalFileName[] = "";
-    strcpy(originalFileName, fileAddress);
-    char tempFileName[] = "temp.txt";
-    
+
     // 以只读方式打开原文件，以写入方式打开临时文件
-    originalFile = fopen(originalFileName, "r");
-    tempFile = fopen(tempFileName, "w");
-    
-    // 检查文件是否打开成功
-    if  (originalFile == NULL || tempFile == NULL) {
-        printf("打开失败\n");
-        return ;
+    originalFile = fopen(fileAddress, "r");
+    if (originalFile == NULL) {
+        printf("无法打开文件：%s\n", fileAddress);
+        return;
     }
     
+    // 构造临时文件路径
+    char tempFileName[100];
+    snprintf(tempFileName, sizeof(tempFileName), "%s.txt", fileAddress);
+    
+    tempFile = fopen(tempFileName, "w");
+    if (tempFile == NULL) {
+        printf("无法创建临时文件：%s\n", tempFileName);
+        fclose(originalFile);
+        return;
+    }
+
     char line[256] = ""; // 用于存储读取的行
     bool isComment = false;
-    
+
     // 读取一行到line[]，直到文件结尾
     while (fgets(line, sizeof(line), originalFile) != NULL) {
         char *ss = strstr(line, "//");
         char *sa = strstr(line, "/*");
         char *as = strstr(line, "*/");
-        
+    
         if (isComment){
             if (as == NULL) {       // "*/"不存在
                 memset(line, 0, sizeof(line));
@@ -245,16 +250,16 @@ void delete_c(char *fileAddress){
         }
         memset(line, 0, sizeof(line)); // 清空line[]
     }
-    
+
     // 关闭文件
     fclose(originalFile);
     fclose(tempFile);
 
     // 删除原文件，将临时文件重命名为原文件
-    remove(originalFileName);
-    rename(tempFileName, originalFileName);
+    remove(fileAddress);
+    rename(tempFileName, fileAddress);
 
-    printf("执行完成\n\n");
+    printf("处理完成\n", fileAddress);
 }
 
 void delete_py(char *fileAddress){
