@@ -24,7 +24,6 @@ No need to configure any environment, ready to use with a simple click.
 ## Example
  - Before modification:
 ```c
-Copy code
     // main
     int main() {
         printf("Hello, World!"); 
@@ -38,7 +37,6 @@ Copy code
 ```
  - After modification:
 ```c
-Copy code
     int main() {
         printf("Hello, World!"); 
         for (int i = 0; i < 10; i++) {       
