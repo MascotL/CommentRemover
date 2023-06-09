@@ -1,11 +1,11 @@
 #include <stdio.h>
-#include <dirent.h>
+#include <dirent.h> // DIR
 #include <string.h>
-#include <conio.h>
-#include <stdlib.h>
+#include <conio.h> // _getch
+#include <stdlib.h> // system
 #include <windows.h>
-#include <unistd.h>
-#include <stdbool.h>
+#include <unistd.h> // access
+#include <stdbool.h> // bool
 
 
 void fileTypeFilter();
@@ -19,39 +19,45 @@ void delete_html(char *fileAddress);
 void delete_css(char *fileAddress);
 
 int main() {
+    system("title CommentRemover"); // 设置标题
+    system("cls");
     system("chcp 65001 > nul"); // 设置编码为UTF-8
-    printf("这些文件将被执行:\n");
 
-    fileTypeFilter();
-
-    printf("\n输入 \"delete\" 执行\n");
-    printf("或者手动输入文件地址\n");
+    char path[MAX_PATH];
+    if (GetModuleFileName(NULL, path, sizeof(path)) != 0) {
+        char* folderPath = strrchr(path, '\\');
+        if (folderPath != NULL) {
+            *folderPath = '\0';
+        }
+        printf("[%s]\n", path);
+    }
 
     while(1){
-        printf("\n> ");
+        printf("> ");
 
         char input[255] = "";
         scanf("%s", &input);
 
-        if (strcmp(input, "delete") == 0) { // 判断是否为delete
-            printf("按 'y' 继续...\n\n");
+        if (strcmp(input, "-all") == 0) { // 判断是否为delete
+            fileTypeFilter();
+            printf("他们将被执行，按'y'继续...\n");
             if(_getch() == 'y' || _getch() == 'Y') {
                 deleteAllFile();
             }
         } else if (input[1] == ':' && input[2] == '\\') { // 判断是否为文件路径
-            printf("按 'y' 继续...\n\n");
+            printf("执行：%s\n按'y'继续...\n", input);
             if(_getch() == 'y' || _getch() == 'Y') {
                 delete(input);
             }
         } else { // 错误输入
-            printf("请输入正确的路径\n");
+            printf("请输入正确的路径\n\n"); // 判断是否为文件路径，不判断是否正确
         }
     }
 
     return 0;
 }
 
-void fileTypeFilter() {
+void fileTypeFilter() { 
     const char *directory = ".";  // 当前文件夹
     DIR *dir;
     struct dirent *entry;
@@ -59,7 +65,7 @@ void fileTypeFilter() {
     // 打开目录
     dir = opendir(directory);
     if (dir == NULL) {
-        printf("无法打开当前文件夹\n");
+        printf("无法打开当前文件夹\n\n"); // 用户输入后判断是否为文件夹
         return;
     }
 
@@ -79,7 +85,7 @@ void fileTypeFilter() {
                     strcmp(extension, ".go") == 0 ||
                     strcmp(extension, ".html") == 0 ||
                     strcmp(extension, ".css") == 0) {
-                    printf(" - %s\n", entry->d_name);
+                    printf("\n.\\%s\n", entry->d_name);
                 }
             }
         }
@@ -94,13 +100,13 @@ void deleteAllFile() {
     // 打开目录
     dir = opendir(directory);
     if (dir == NULL) {
-        printf("无法打开当前文件夹\n");
+        printf("无法打开当前文件夹\n\n"); // 执行删除全部文件后判断是否为文件夹
         return;
     }
 
     // 获取当前文件夹路径
     char buffer[255];
-    GetModuleFileName(NULL, buffer, sizeof(buffer));
+    GetModuleFileName(NULL, buffer, sizeof(buffer)); // 获取当前文件夹路径
     char* lastSlash = strrchr(buffer, '\\');
     if (lastSlash != NULL) {
         // 将反斜杠的下一位替换为字符串结束符
@@ -133,19 +139,19 @@ void deleteAllFile() {
             }
         }
     }
-    printf("结束!\n");
+    printf("结束!\n\n");
     closedir(dir);
 }
 
 void delete(char *fileAddress) {
     if(access(fileAddress, F_OK) != 0) {
-        printf("\"%s\" 路径不存在", fileAddress);
+        printf("\"%s\" 路径不存在\n\n", fileAddress); // 执行删除单个文件后判断路径是否存在
         return;
     }
     // 判断文件名后缀
     const char *extension = strrchr(fileAddress, '.');
     if (extension == NULL) {
-        printf("\"%s\" 未知文件", fileAddress);
+        printf("\"%s\" 未知文件\n\n", fileAddress); // 执行删除单个文件后判断是否为合法文件
         return;
     } else if (strcmp(extension, ".c") == 0 ||
             strcmp(extension, ".cpp") == 0 ||
@@ -166,7 +172,7 @@ void delete(char *fileAddress) {
     } else if (strcmp(extension, ".css") == 0) {
         delete_css(fileAddress);
     } else {
-        printf("\"%s\" 非法文件", fileAddress);
+        printf("\"%s\" 非法文件\n\n", fileAddress);
         return;
     }
 }
@@ -178,7 +184,7 @@ void delete_c(char *fileAddress) {
     // 以只读方式打开原文件，以写入方式打开临时文件
     originalFile = fopen(fileAddress, "r");
     if (originalFile == NULL) {
-        printf("无法打开文件：%s\n", fileAddress);
+        printf("无法打开文件：%s\n", fileAddress); // 执行删除单个-c文件后判断是否为文件
         return;
     }
     
@@ -193,7 +199,7 @@ void delete_c(char *fileAddress) {
         return;
     }
 
-    char line[256] = ""; // 用于存储读取的行
+    char line[999] = ""; // 用于存储读取的行
     bool isComment = false;
 
     // 读取一行到line[]，直到文件结尾
@@ -260,25 +266,25 @@ void delete_c(char *fileAddress) {
     remove(fileAddress);
     rename(tempFileName, fileAddress);
 
-    printf("处理完成\n", fileAddress);
+    printf("处理完成\n\n", fileAddress);
 }
 
 void delete_py(char *fileAddress){
-    printf("开发中...\n");
+    printf("开发中...\n\n");
 }
 
 void delete_php(char *fileAddress){
-    printf("开发中...\n");
+    printf("开发中...\n\n");
 }
 
 void delete_rb(char *fileAddress){
-    printf("开发中...\n");
+    printf("开发中...\n\n");
 }
 
 void delete_html(char *fileAddress){
-    printf("开发中...\n");
+    printf("开发中...\n\n");
 }
 
 void delete_css(char *fileAddress){
-    printf("开发中...\n");
+    printf("开发中...\n\n");
 }
