@@ -11,7 +11,7 @@
 
 ## 支持
 
-( ✅支持 🚧开发中 )  
+平台 - Windows  
 ||文件类型|单行注释|多行注释|
 |---|---|---|---|
 |✅|`.c` `.cpp` `.java` `.js`<br>`.swift` `.rs` `.go`|`// Comment`|`/* Comment */`|
@@ -21,43 +21,32 @@
 |🚧|`.html`     |`<!-- Comment -->` |`<!-- Comment -->`|
 |🚧|`.css`      |`/* Comment */`    |`/* Comment */`|
 
-## 示例
+<i>🚧开发中</i>
 
-<div style="display: flex;">
-  <div style="flex: 50%; padding-right: 10px;">
-    <pre>修改前：
-    <code>
-    <span style="color: #7f848e;">// main</span>
-    <span style="color: #c678dd;">int</span> <span style="color: #61afef;">main</span><span style="color: #d19a5e;">() {</span>
-        <span style="color: #61afef;">printf</span><span style="color: #c678dd;">(</span><span style="color: #98c37a;">"Hello, World!"</span><span style="color: #c678dd;">)</span>; 
-        <span style="color: #c678dd;">for (int </span>i <span style="color: #c678dd;">=</span> <span style="color: #d19a5e;">0</span>; i <span style="color: #c678dd;"><</span> <span style="color: #d19a5e;">10</span>; i<span style="color: #c678dd;">++) {       
-            <span style="color: #7f848e;">/*
+## 示例
+ - 修改前：
+```c
+    // main
+    int main() {
+        printf("Hello, World!"); 
+        for (int i = 0; i < 10; i++) {       
+            /*
             Cyclic bodies
-            */</span>
+            */
         }
-        return </span><span style="color: #d19a5e;">0</span>;
-    <span style="color: #d19a5e;">}</span>
-    </code></pre>
-  </div>
-  <div style="flex: 50%; padding-left: 10px;">
-    <pre>修改后：
-    <code>
-    <br>
-    <span style="color: #c678dd;">int</span> <span style="color: #61afef;">main</span><span style="color: #d19a5e;">() {</span>
-        <span style="color: #61afef;">printf</span><span style="color: #c678dd;">(</span><span style="color: #98c37a;">"Hello, World!"</span><span style="color: #c678dd;">)</span>; 
-        <span style="color: #c678dd;">for (int </span>i <span style="color: #c678dd;">=</span> <span style="color: #d19a5e;">0</span>; i <span style="color: #c678dd;"><</span> <span style="color: #d19a5e;">10</span>; i<span style="color: #c678dd;">++) {       
-            <br>
-            <br>
+        return 0;
+    }
+```
+ - 修改后：
+```c
+    int main() {
+        printf("Hello, World!"); 
+        for (int i = 0; i < 10; i++) {       
+
         }
-        return </span><span style="color: #d19a5e;">0</span>;
-    <span style="color: #d19a5e;">}</span>
-    <br>
-    </code></pre>
-  </div>
-  <div style="flex: 50%; padding-left: 10px;">
-    </code></pre>
-  </div>
-</div>
+        return 0;
+    }
+```
 
 ## 使用
 
