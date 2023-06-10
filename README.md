@@ -19,7 +19,7 @@
 |🚧|`.html`     |`<!-- Comment -->` |`<!-- Comment -->`|
 |🚧|`.css`      |`/* Comment */`    |`/* Comment */`|
 
-<i>(🚧开发中)</i>&nbsp;&nbsp;&nbsp;&nbsp;Windows  
+<i>(🚧开发中)</i>&nbsp;&nbsp;&nbsp;&nbsp;仅支持Windows  
 
 ## 示例
  - 修改前：

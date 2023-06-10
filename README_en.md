@@ -1,4 +1,4 @@
-## CommentRemover
+# CommentRemover
 [简体中文](./README.md) | English
 
 ## Introduction
@@ -19,7 +19,7 @@ No need to configure any environment, ready to use with a simple click.
 |🚧|`.html`     |`<!-- Comment -->` |`<!-- Comment -->`|
 |🚧|`.css`      |`/* Comment */`    |`/* Comment */`|
 
-<i>(🚧 Under development)</i>&nbsp;&nbsp;&nbsp;&nbsp;Windows
+<i>(🚧 Under development)</i>&nbsp;&nbsp;&nbsp;&nbsp;only supports Windows
 
 ## Example
  - Before modification:
