@@ -207,6 +207,11 @@ void delete_c(char *fileAddress) {
         char *ss = strstr(line, "//");
         char *sa = strstr(line, "/*");
         char *as = strstr(line, "*/");
+
+        char *sQuoL = strchr(line, '\'');
+        char *sQuoC = strrchr(line, '\'');
+        char *dQuoL = strchr(line, '\"');
+        char *dQuoC = strrchr(line, '\"');
     
         if (isComment){
             if (as == NULL) {       // "*/"不存在
@@ -225,11 +230,21 @@ void delete_c(char *fileAddress) {
         } else if (ss == NULL && sa == NULL) { // 无注释
             fputs(line, tempFile);
         } else if (ss != NULL && sa == NULL) { // "//"存在
-            *ss = '\n';
-            *(ss + 1) = '\0';
-            fputs(line, tempFile);
+            if (sQuoL != NULL && sQuoC != NULL && sQuoL < ss && ss < sQuoC) { // "//" 在前后单引号之间
+                fputs(line, tempFile);
+            } else if (dQuoL != NULL && dQuoC != NULL && dQuoL < ss && ss < dQuoC) { // "//" 在前后双引号之间
+                fputs(line, tempFile);
+            } else { // "//" 不在引号之间
+                *ss = '\n';
+                *(ss + 1) = '\0';
+                fputs(line, tempFile);
+            }
         } else if (ss == NULL && sa != NULL) { // "/*"存在
-            if (as != NULL) {       // "*/"也存在
+            if (sQuoL != NULL && sQuoC != NULL && sQuoL < sa && sa < sQuoC) { // "/*" 在前后单引号之间
+                fputs(line, tempFile);
+            } else if (dQuoL != NULL && dQuoC != NULL && dQuoL < sa && sa < dQuoC) { // "/*" 在前后双引号之间
+                fputs(line, tempFile);
+            } else if (as != NULL) { // "*/"也存在
                 for (int i = 0; ; i++) {
                     *(sa + i) = ' ';
                     if ((sa+i-1) == as) {
@@ -237,7 +252,7 @@ void delete_c(char *fileAddress) {
                         break;
                     }
                 }
-            } else {        // "*/"不存在
+            } else { // "*/"不存在
                 isComment = true;
                 *sa = '\n';
                 *(sa + 1) = '\0';
