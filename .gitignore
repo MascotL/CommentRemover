@@ -2,3 +2,4 @@
 *.exe
 tempCodeRunnerFile.c
 .vscode/tasks.json
+.vscode/launch.json
